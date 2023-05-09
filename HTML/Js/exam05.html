@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .box {
+        position: relative;
+        width: 90px;
+        height: 30px;
+        text-align: center;
+        background-color: #959595;
+        color: white;
+      }
+
+      #html {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+      #css {
+        position: absolute;
+        top: 10px;
+        left: 120px;
+      }
+
+      #javascript {
+        position: absolute;
+        top: 10px;
+        left: 230px;
+      }
+    </style>
+    <script>
+      function changeColor() {
+        let button = event.target;
+        button.style.backgroundColor = "#ffffff";
+        button.style.color = "#000000";
+        button.style.border = "1px solid black";
+      }
+
+      function changeBlackColor() {
+        let box = event.target;
+        box.style.backgroundColor = "#959595";
+        box.style.color = "#ffffff";
+      }
+    </script>
+  </head>
+  <body>
+    <div
+      id="html"
+      class="box"
+      onmouseover="changeColor()"
+      onmouseleave="changeBlackColor()"
+    >
+      html
+    </div>
+    <div
+      id="css"
+      class="box"
+      onmouseover="changeColor()"
+      onmouseleave="changeBlackColor()"
+    >
+      css
+    </div>
+    <div
+      id="javascript"
+      class="box"
+      onmouseover="changeColor()"
+      onmouseleave="changeBlackColor()"
+    >
+      javascript
+    </div>
+  </body>
+</html>

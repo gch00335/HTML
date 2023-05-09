@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .box {
+        position: relative;
+        width: 90px;
+        height: 30px;
+        text-align: center;
+        background-color: #959595;
+        color: white;
+      }
+
+      #html {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+      #css {
+        position: absolute;
+        top: 10px;
+        left: 120px;
+      }
+
+      #javascript {
+        position: absolute;
+        top: 10px;
+        left: 230px;
+      }
+    </style>
+    <script>
+      let saveBox = null; // 이전 클릭한 박스에 대한 내용을 저장하는 변수
+
+      function changeColor() {
+        const clickBox = event.target; // 현재 클릭한 박스
+
+        // 이전 박스와 같은 경우: 원래 색으로 돌림
+        if (saveBox === clickBox) {
+          clickBox.style.backgroundColor = clickBox.originalColor;
+          clickBox.style.color = "#ffffff";
+          clickBox.style.border = "none";
+          saveBox = null;
+        }
+        // 이전 박스와 다른 경우: 선택한 색으로 변경
+        else {
+          clickBox.originalColor = clickBox.style.backgroundColor; // 원래 색상을 저장
+          clickBox.style.backgroundColor = "#ffffff";
+          clickBox.style.color = "#000000";
+          clickBox.style.border = "1px solid black";
+          if (saveBox) {
+            // 이전 박스가 존재하는 경우: 이전 박스의 색상을 원래 색상으로 변경
+            saveBox.style.backgroundColor = saveBox.originalColor;
+            saveBox.style.color = "#ffffff";
+            saveBox.style.border = "none";
+          }
+          saveBox = clickBox;
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="html" class="box" onclick=" changeColor()">html</div>
+    <div id="css" class="box" onclick=" changeColor()">css</div>
+    <div id="javascript" class="box" onclick=" changeColor()">javascript</div>
+  </body>
+</html>
