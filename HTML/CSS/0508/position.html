@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #div1 {
+        position: relative;
+        top: 100px;
+        left: 10px;
+        border: 1px red solid;
+      }
+      #div2 {
+        position: relative;
+        border: 1px red solid;
+      }
+      #div3 {
+        position: fixed; /*고정 ,절대 안움직임*/
+        left: 0px;
+        top: 0px;
+        border: 1px red solid;
+      }
+      #div4 {
+        position: absolute; /* 절대값...? */
+
+        /* 
+  - static: 기본값으로, 요소를 일반적인 문서 흐름에 따라 배치합니다.
+  -  relative: 요소를 일반적인 문서 흐름에 따라 배치하면서, top, right, bottom, left 속성을 사용하여 위치를 조정 가능.
+  - absolute: 요소를 일반적인 문서 흐름에서 벗어나 상위 요소 중 position 값이 static이 아닌 요소를 기준으로 위치를 지정.
+  - fixed: 요소를 뷰포트(viewport)의 상대적인 위치에 고정
+  
+  따라서, fixed를 사용하면 스크롤을 내려도 해당 요소의 위치가 그대로 유지되지만, 
+  absolute를 사용하면 부모 요소나 최상위 요소의 위치에 따라 위치가 변경될 수 있습니다.*/
+        left: 0px;
+
+        border: 1px red solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="div1">relative</div>
+    <div id="div2">relative</div>
+    <div id="div3">fixed</div>
+    <div id="div4">absolute</div>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      /*class 글씨 및 네모 크기 설정*/
+      .div_class {
+        height: 100px;
+        width: 300px;
+        color: rgb(0, 102, 255);
+        display: flex;
+        flex-direction: row;
+      }
+
+      .div_id {
+        color: rgb(255, 0, 191);
+      }
+
+      #div1 {
+        background-color: rgb(255, 127, 127);
+        text-align: center;
+      }
+
+      #div2 {
+        background-color: rgb(255, 230, 0);
+        text-align: center;
+      }
+
+      #div3 {
+        text-align: center;
+        background-color: rgb(150, 235, 101);
+      }
+
+      #div4 {
+        background-color: rgb(0, 217, 255);
+      }
+
+      #div5 {
+        text-align: center;
+        background-color: rgb(238, 165, 248);
+      }
+
+      /*test마다 칸 나눠서 표현해보기*/
+      .span_class {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        margin: 1 15px;
+        border: 5px solid white;
+        padding: 30px;
+      }
+
+      #span12 {
+        color: azure;
+      }
+
+      #span21 {
+        color: azure;
+      }
+
+      #span33 {
+        color: azure;
+      }
+
+      #span42 {
+        color: azure;
+      }
+
+      #span51 {
+        color: azure;
+      }
+      .center {
+        align-items: center;
+        text-transform: uppercase;
+        height: 55px;
+        width: 350px;
+        color: azure;
+        background-color: rgb(238, 165, 248);
+        border: 6px solid rgb(231, 176, 224);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <p>exam.03 -inline 방식, embedded 방식</p>
+    </div>
+    <div class="div_class" id="div1">
+      <span class="span_class" name="span_name1" id="span11">text1</span>
+      <span class="span_class" name="span_name1" id="span12">text2</span>
+      <span class="span_class" name="span_name1" id="span13">text3</span>
+    </div>
+    <br />
+
+    <div class="div_class" id="div2">
+      <span class="span_class" name="span_name2" id="span21">text1</span>
+      <span class="span_class" name="span_name2" id="span22">text2</span>
+      <span class="span_class" name="span_name2" id="span23">text3</span>
+    </div>
+
+    <br />
+    <div class="div_class" id="div3">
+      <span class="span_class" name="span_name3" id="span31">text1</span>
+      <span class="span_class" name="span_name3" id="span32">text2</span>
+      <span class="span_class" name="span_name3" id="span33">text3</span>
+    </div>
+    <br />
+
+    <div class="div_class" id="div4">
+      <span class="span_class" name="span_name3" id="span41">text1</span>
+      <span class="span_class" name="span_name3" id="span42">text2</span>
+      <span class="span_class" name="span_name3" id="span43">text3</span>
+    </div>
+
+    <br />
+    <div class="div_class" id="div5">
+      <span class="span_class" name="span_name3" id="span51">text1</span>
+      <span class="span_class" name="span_name3" id="span52">text2</span>
+      <span class="span_class" name="span_name3" id="span53">text3</span>
+    </div>
+  </body>
+</html>

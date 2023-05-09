@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        font-size: large;
+      }
+      .rem {
+        /*가장 최상위 태그에 지정된 폰트에 비례된 것 */
+        font-size: 1.5rem;
+      }
+
+      #div1 {
+        font-size: 10pt;
+      }
+      .em {
+        /*부모 태그에 지정된 폰트에 비례 */
+        font-size: 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="rem">Hello World</p>
+
+    <div id="div1">
+      <p class="em">Hello World</p>
+      <!--div중요...후..이것때매 글자크기가 안달라진거임..-->
+    </div>
+  </body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .div_class {
+        height: 100px;
+        width: 480px;
+        color: rgb(0, 102, 255);
+        display: flex;
+        flex-direction: row;
+      }
+
+      .div_id {
+        color: rgb(255, 0, 191);
+      }
+
+      #div1 {
+        background-color: rgb(255, 127, 127);
+        text-decoration: overline;
+        text-align: center;
+      }
+
+      #div2 {
+        background-color: rgb(255, 230, 0);
+        text-decoration: underline;
+        text-align: center;
+      }
+
+      #div3 {
+        text-align: center;
+        background-color: rgb(150, 235, 101);
+      }
+
+      #div4 {
+        background-color: rgb(0, 217, 255);
+        text-decoration: underline;
+      }
+
+      #div5 {
+        text-decoration: overline;
+        text-align: center;
+        background-color: rgb(238, 165, 248);
+      }
+
+      .span_class {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        margin: 2 50px;
+        border: 3px solid white;
+        padding: 31px;
+      }
+
+      #span12 {
+        color: azure;
+      }
+
+      #span21 {
+        color: azure;
+      }
+
+      #span33 {
+        color: azure;
+      }
+
+      #span42 {
+        color: azure;
+      }
+
+      #span51 {
+        color: azure;
+      }
+      /*정렬 및 밑줄*/
+      .center {
+        text-transform: uppercase;
+        height: 70px;
+        width: 480px;
+        color: azure;
+
+        background-color: rgb(238, 165, 248);
+        border: 6px solid rgb(231, 176, 224);
+      }
+
+      /*들여쓰기 ,글자크기*/
+      .p {
+        color: rgba(22, 135, 240, 0.945);
+        text-decoration: overline;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 15px;
+        text-indent: 3em;
+      }
+
+      .c {
+        color: rgba(22, 135, 240, 0.945);
+        text-decoration: underline;
+        text-transform: lowercase;
+        text-align: start;
+        font-size: 15px;
+        text-indent: 3em;
+      }
+
+      .d {
+        color: rgba(22, 135, 240, 0.945);
+        text-transform: lowercase;
+        text-align: start;
+        font-size: 15px;
+      }
+
+      .e {
+        color: rgba(22, 135, 240, 0.945);
+        text-transform: lowercase;
+        text-align: end;
+        font-size: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <p>
+        exam.04 - 텍스트제어(1)
+        <br />
+        : color, text-align , text-decoration , text-indent
+      </p>
+    </div>
+
+    <div class="div_class" id="div1">
+      <span class="span_class" name="span_name1" id="span11">text1</span>
+      <span class="span_class" name="span_name1" id="span12">text2</span>
+      <span class="span_class" name="span_name1" id="span13">text3</span>
+    </div>
+
+    <div class="div_class" id="div2">
+      <span class="span_class" name="span_name2" id="span21">text1</span>
+      <span class="span_class" name="span_name2" id="span22">text2</span>
+      <span class="span_class" name="span_name2" id="span23">text3</span>
+    </div>
+
+    <div class="div_class" id="div3">
+      <span class="span_class" name="span_name3" id="span31">text1</span>
+      <span class="span_class" name="span_name3" id="span32">text2</span>
+      <span class="span_class" name="span_name3" id="span33">text3</span>
+    </div>
+
+    <div class="div_class" id="div4">
+      <span class="span_class" name="span_name3" id="span41">text1</span>
+      <span class="span_class" name="span_name3" id="span42">text2</span>
+      <span class="span_class" name="span_name3" id="span43">text3</span>
+    </div>
+
+    <div class="div_class" id="div5">
+      <span class="span_class" name="span_name3" id="span51">text1</span>
+      <span class="span_class" name="span_name3" id="span52">text2</span>
+      <span class="span_class" name="span_name3" id="span53">text3</span>
+    </div>
+
+    <div class="p">
+      <p>
+        exam.04 - 가운제 정렬, 위에 밑줄 , 대문자,
+        <br />
+        : ninijini
+      </p>
+    </div>
+
+    <div class="c">
+      <p>
+        exam.04 - 왼쪽 정렬, 아래밑줄, 소문자, 들여쓰기 3
+        <br />
+        : ninijini
+      </p>
+    </div>
+
+    <div class="d">
+      <p>
+        exam.04 - 왼쪽 정렬, 아래밑줄, 소문자, 들여쓰기 없음
+        <br />
+        : ninijini
+      </p>
+    </div>
+
+    <div class="e">
+      <p>
+        exam.04 - 오른쪽 정렬
+        <br />
+        : ninijini
+      </p>
+    </div>
+  </body>
+</html>
