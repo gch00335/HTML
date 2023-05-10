@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+    crossorigin="anonymous"></script>
+
+
+<style>
+    #div1{
+
+        width: 300px;
+        height: 200px;
+        background-color: #e2dede;
+    }
+</style>
+<script>
+       // 성별, 직업, 취미 선택 조건 수만큼 선택하지 않으면 알림 표시하기
+    $(function () {
+      $("input[type=submit]").click(function () {
+          let countcheckbox = $("input[type=checkbox]:checked").length;
+          let selectedjob = $("select[name='job']").val();
+          let count = $("input[type=radio]:checked").length;
+          const email = $("input[name='email']").val();
+          const password = $("input[name='password']").val();
+
+          if (countcheckbox < 3) {
+            alert("취미를 3개 이상 선택하세요");
+          } else if (selectedjob === "") {
+            alert("직업을 선택해주세요.");
+          } else if (count < 1) {
+            alert("성별을 1개 이상 선택하세요");
+          } else if (email === "" || password === "") {
+            alert("아이디와 비밀번호를 입력해주세요.");
+          } else {
+            $('form').submit();
+          }
+      });
+
+      $('form').submit(function(event){
+          event.preventDefault();
+
+          const name = $("input[name='name']").val();
+          const password = $("input[name='password']").val();
+
+          alert(name + "님 안녕하세요. 가입완료되었습니다.");
+      });
+  });
+  </script>
+
+</head>
+<body>
+    <div id="div1">
+    <form action="">
+        <!--아이디 @ 쓰게하기-->
+        아이디
+        <input type="email" name="email" id="" /><br />
+
+        <!--비밀번호 최소 5자리 쓰게하기-->
+        비밀번호
+        <input type="text" name="" id="password" required minlength="5" /><br />
+        성별
+        <label for="radio1">남자</label>
+        <input type="radio" id="radio1" name="options" value="1" />
+        <label for="radio2">여자</label>
+        <input type="radio" id="radio2" name="options" value="2" /> <br>
+  
+        직업
+        <select name="job" required> <!--직업 무조건 고르게 하기-->
+          <option value="" class="option"></option>
+          <option value="data-analyst">데이터분석가</option>
+          <option value="frontend-developer">프론트엔드개발자</option>
+          <option value="backend-developer">백엔드개발자</option>
+        </select>
+        <br />
+        취미
+        <input type="checkbox" name="" id="" /> 개발
+        <input type="checkbox" name="" id="" /> 게임
+        <input type="checkbox" name="" id="" /> 낚시
+        <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+
+        <input type="checkbox" name="" id="" /> 운동
+        <input type="checkbox" name="" id="" /> 독서
+        <input type="checkbox" name="" id="" /> 음악감상
+  
+        <br /> <br /> <br />
+        <!--최소버튼 누르면 리셋-->
+        <input type="reset" value="취소" name="" id="" />
+
+        <input type="submit" value="회원가입" name="" id="" >
+    </div>
+</body>
+</html>

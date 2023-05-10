@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      .table {
+        border-collapse: collapse;
+        width: 300px;
+      }
+      .table th,
+      .table td {
+        border: 1px solid black;
+        padding: 8px;
+      }
+      .table td:nth-child(2) {
+        width: 120px;
+      }
+    </style>
+    <script>
+      //1. 확인체크 누르면 전체 체크되게 하기 / 확인해제 하면 전체 해제하게 하기
+
+      $(function () {
+        $("input[name='checkAll']").change(function () {
+          let ischecked = $(this).is(":checked");
+          $("input[name='check']").prop("checked", ischecked);
+        });
+      });
+
+      //3.체크한 후 로그버튼 누르면 콘솔로그에 제목표시
+      $(function () {
+        $("input[type=button]").click(function () {
+          let checkedRows = $("input[name=check]:checked").closest("tr");
+          checkedRows.each(function () {
+            let column2 = $(this).find("td:nth-child(2)").text();
+            console.log(column2);
+          });
+        });
+      });
+
+      //4. 선택없으면 선택된 제목만 알림표시(알림창)
+      $(function () {
+        $("input[type = button]").click(function () {
+          let countcheckbox = $("input[type = checkbox]:checked").length;
+          if (countcheckbox < 1) {
+            alert("선택된 것이 없습니다.");
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <table class="table">
+      <tr>
+        <td><input type="checkbox" name="checkAll" id="" /><b>확인</b></td>
+        <th>제 목</th>
+        <th>글쓴 시간</th>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="check" id="" /></td>
+        <td>교수님</td>
+        <td>10:03:00</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="check" id="" /></td>
+        <td>프로젝트</td>
+        <td>10:03:00</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="check" id="" /></td>
+        <td>힌트 많이 주세요</td>
+        <td>10:03:00</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="check" id="" /></td>
+        <td>제이쿼리 재밌다</td>
+        <td>10:03:00</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" name="check" id="" /></td>
+        <td>오늘의 과제 끝!</td>
+        <td>10:03:00</td>
+      </tr>
+    </table>
+
+    <input type="button" value="로그" name="" id="" />
+  </body>
+</html>
