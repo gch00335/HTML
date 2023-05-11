@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        background-color: #000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      #container {
+        position: relative;
+        width: 900px;
+        height: 350px;
+        border: 1px solid black;
+        overflow: hidden; /* 테두리 외부를 가리키는 부분을 숨김 */
+      }
+      #start_screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      #start_button {
+        position: absolute;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgb(124, 122, 122);
+        color: rgb(255, 255, 255);
+        padding: 7px 70px;
+        font-size: 25px;
+        border: none;
+        cursor: pointer;
+      }
+      .sliding-background {
+        z-index: -100;
+        position: absolute;
+        background: url("images/bg1.png");
+        width: 2000%;
+        height: 100%;
+        animation: slide 10s linear infinite;
+      }
+
+      @keyframes slide {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(-500px, 0);
+        }
+      }
+
+      #hero {
+        position: absolute;
+        left: 20px;
+        bottom: 68px;
+        width: 80px;
+        height: 60px;
+      }
+
+      #enemy {
+        position: absolute;
+        width: 70px;
+        height: 60px;
+        right: 0px;
+        bottom: 65px;
+      }
+
+      #enemy2 {
+        position: absolute;
+        width: 45px;
+        height: 70px;
+        right: 0px;
+        bottom: 70px;
+      }
+
+      #score {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: white;
+        font-size: 24px;
+      }
+    </style>
+
+    <script>
+      const ENEMY_SPEED_MIN_EASY = 1000;
+      const ENEMY_SPEED_MAX_EASY = 3000;
+
+      const ENEMY_SPEED_MIN_HARD = 500;
+      const ENEMY_SPEED_MAX_HARD = 1000;
+
+      $(function () {
+        const startButton = $("#start_button");
+        const startScreen = $("#start_screen");
+
+        startButton.on("click", function () {
+          startScreen.hide(); // 시작 화면 숨기기
+          gameStart(); // 게임 시작
+        });
+
+        function gameStart() {
+          const hero = $("#hero");
+          const enemy = $("#enemy");
+
+          // 점프 중인지?
+          let isJumping = false;
+          let score = 0;
+
+          gameStart();
+        }
+        function gameStart() {
+          $("#gameover_screen").hide();
+
+          setKeyboardEvent();
+          enemyStart();
+
+          checkGameOver();
+        }
+
+        function isColliding(el1, el2) {
+          const rect1 = el1.getBoundingClientRect();
+          const rect2 = el2.getBoundingClientRect();
+
+          return !(
+            rect1.bottom < rect2.top ||
+            rect1.top > rect2.bottom ||
+            rect1.right < rect2.left ||
+            rect1.left > rect2.right
+          );
+        }
+        d;
+        function checkGameOver() {
+          setInterval(function () {
+            if (isColliding(hero[0], enemy[0])) {
+              hero.stop();
+              enemy.stop();
+              $("#gameover_screen").show(); // 게임 오버 시 게임 오버 화면 표시
+            }
+          }, 1000 / 60);
+        }
+
+        function getRandomNumber(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function enemyStart() {
+          // 속도 조절
+          const speed = getRandomNumber(1000, 4000);
+
+          // 적이 오른쪽에서 왼쪽으로 이동
+          enemy.animate({ right: "650px" }, speed, "linear", function () {
+            // 점수 올리자
+            score += 100;
+            updateScore(score);
+
+            // 적 리셋
+            enemy.css("right", "-50px");
+            enemyStart();
+          });
+
+          enemy2.animate({ right: "650px" }, 6000, "linear", function () {
+            // 점수 올리자
+            score += 100;
+            updateScore(score);
+
+            // 적 리셋
+            enemy.css("right", "-50px");
+            enemyStart();
+          });
+        }
+
+        function updateScore(score) {
+          $("#score").text(score);
+        }
+
+        function jump() {
+          isJumping = true;
+          hero.animate({ bottom: "+=85px" }, { duration: 200 }).animate(
+            { bottom: "-=85px" },
+            {
+              duration: 200,
+              complete: function () {
+                isJumping = false;
+              },
+            }
+          );
+        }
+
+        // 키보드 이벤트 정의
+        function setKeyboardEvent() {
+          $("html").keydown(function (e) {
+            switch (e.key) {
+              case " ":
+                if (!isJumping) {
+                  jump();
+                }
+                break;
+            }
+            // console.log(e.key);
+          });
+        }
+        // 재시작 버튼 클릭 이벤트 핸들러
+        $('#gameover_screen input[type="button"]').click(function () {
+          $("#gameover_screen").hide(); // 게임 오버 화면 숨김
+          gameStart(); // 게임 재시작
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="container">
+      <img id="start_screen" src="images/start.jpg" alt="Game Start" />
+      <button id="start_button">start</button>
+      <div class="sliding-background"></div>
+
+      <img id="hero" src="images/nini.gif" alt="" />
+
+      <img id="enemy" src="images/enemy.gif" alt="" />
+      <img id="enemy2" src="images/enemy2.gif" alt="" />
+
+      <div id="gameover_screen">
+        Game Over
+        <input type="button" value="재시작" />
+      </div>
+
+      <div id="score">0</div>
+    </div>
+  </body>
+</html>

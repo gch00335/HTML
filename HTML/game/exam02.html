@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      #container {
+        position: absolute;
+        width: 300px;
+        height: 150px;
+        border: 1px black solid;
+      }
+
+      #hero {
+        position: absolute;
+        left: 20px;
+        bottom: 0px;
+        width: 50px;
+        height: 50px;
+        border: 1px solid;
+      }
+      #enemy {
+        position: absolute;
+        width: 20px;
+        right: 0px;
+        bottom: 0px;
+      }
+    </style>
+
+    <script>
+      const ENEMY_SPEED_MIN_EASY = 1000;
+      const ENEMY_SPEED_MAX_EASY = 3000;
+
+      const ENEMY_SPEED_MIN_HARD = 500;
+      const ENEMY_SPEED_MAX_HARD = 1000;
+
+      $(function () {
+        const hero = $("#hero");
+        const enemy = $("#enemy");
+        // 점프 중인지?
+        let isJumping = false;
+
+        gameStart();
+
+        function gameStart() {
+          $("#gameover_screen").hide();
+
+          setKeyboardEvent();
+          enemyStart();
+
+          checkGameOver();
+        }
+
+        function checkGameOver() {
+          setInterval(function () {
+            const heroLeft = Number(hero.css("left").replace("px", ""));
+            const heroRight = heroLeft + 50;
+            const heroBottom = Number(hero.css("bottom").replace("px", ""));
+
+            const enemyLeft = Number(enemy.css("left").replace("px", ""));
+            const enemyRight = enemyLeft + 20;
+            const enemyTop = 20;
+
+            const isGameOver =
+              heroLeft < enemyLeft &&
+              enemyLeft < heroRight &&
+              heroBottom < enemyTop;
+
+            // console.log(`heroRight: ${heroRight}`);
+            // console.log(`heroBottom: ${heroBottom}`);
+            // console.log(`enemyLeft: ${enemyLeft}`);
+            // console.log(`enemyTop: ${enemyTop}`);
+            console.log(isGameOver);
+
+            if (isGameOver) {
+              hero.stop();
+              enemy.stop();
+              $("#gameover_screen").show(); // 게임 오버 시 게임 오버 화면 표시
+            }
+          }, 1000 / 60);
+        }
+
+        function getRandomNumber(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function enemyStart() {
+          // 속도 조절
+          const speed = getRandomNumber(1000, 3000);
+
+          // 미사일 (오른쪽에서 왼쪽으로)이동
+          enemy.animate({ right: "350px" }, speed, "linear", function () {
+            enemy.css("right", "-50px");
+            enemyStart();
+          });
+        }
+        // 스페이스 누르면 점프
+        function jump() {
+          isJumping = true;
+          hero
+            .animate({ bottom: "+=50px" })
+            .animate({ bottom: "-=50px" }, function () {
+              isJumping = false;
+            });
+        }
+
+        // 키보드 이벤트 정의
+        function setKeyboardEvent() {
+          $("html").keydown(function (e) {
+            switch (e.key) {
+              case " ":
+                if (!isJumping) {
+                  jump();
+                }
+                break;
+            }
+            //console.log(e.key);
+          });
+        }
+
+        // 재시작 버튼 클릭 이벤트 핸들러
+        $('#gameover_screen input[type="button"]').click(function () {
+          $("#gameover_screen").hide(); // 게임 오버 화면 숨김
+          gameStart(); // 게임 재시작
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="container">
+      <img id="hero" src="images/pompom.png" alt="" />
+      <img id="enemy" src="images/enemy.png" alt="" />
+
+      <div id="gameover_screen">
+        Game Over
+        <input type="button" value="재시작" />
+      </div>
+    </div>
+  </body>
+</html>
