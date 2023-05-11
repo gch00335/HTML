@@ -26,6 +26,7 @@
         border: 1px solid black;
         overflow: hidden; /* 테두리 외부를 가리키는 부분을 숨김 */
       }
+
       #start_screen {
         position: absolute;
         top: 0;
@@ -36,12 +37,12 @@
 
       #start_button {
         position: absolute;
-        top: 90%;
+        top: 95%;
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: rgb(124, 122, 122);
         color: rgb(255, 255, 255);
-        padding: 7px 70px;
+        padding: 5px 70px;
         font-size: 25px;
         border: none;
         cursor: pointer;
@@ -88,6 +89,30 @@
         bottom: 70px;
       }
 
+      #gameover_screen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        text-align: center;
+        display: none;
+      }
+
+      #gameover_screen input[type="button"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+      }
+
       #score {
         position: absolute;
         top: 10px;
@@ -107,22 +132,26 @@
       $(function () {
         const startButton = $("#start_button");
         const startScreen = $("#start_screen");
+        let hero, enemy, enemy2;
 
         startButton.on("click", function () {
           startScreen.hide(); // 시작 화면 숨기기
+          startButton.hide(); // 시작 버튼 숨기기
+
+          hero = $("#hero");
+          enemy = $("#enemy");
+          enemy2 = $("#enemy2");
+
+          hero.show();
+          enemy.show();
+          enemy2.show();
+
           gameStart(); // 게임 시작
         });
 
-        function gameStart() {
-          const hero = $("#hero");
-          const enemy = $("#enemy");
+        let isJumping = false;
+        let score = 0;
 
-          // 점프 중인지?
-          let isJumping = false;
-          let score = 0;
-
-          gameStart();
-        }
         function gameStart() {
           $("#gameover_screen").hide();
 
@@ -137,13 +166,12 @@
           const rect2 = el2.getBoundingClientRect();
 
           return !(
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom ||
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right
+            rect1.bottom <= rect2.top ||
+            rect1.top >= rect2.bottom ||
+            rect1.right <= rect2.left ||
+            rect1.left >= rect2.right
           );
         }
-        d;
         function checkGameOver() {
           setInterval(function () {
             if (isColliding(hero[0], enemy[0])) {
@@ -162,8 +190,8 @@
           // 속도 조절
           const speed = getRandomNumber(1000, 4000);
 
-          // 적이 오른쪽에서 왼쪽으로 이동
-          enemy.animate({ right: "650px" }, speed, "linear", function () {
+          // 적이 오른쪽에서 왼쪽으로 이동 // 괴물오는 거리(주인공과의)
+          enemy.animate({ right: "450px" }, speed, "linear", function () {
             // 점수 올리자
             score += 100;
             updateScore(score);
@@ -173,13 +201,13 @@
             enemyStart();
           });
 
-          enemy2.animate({ right: "650px" }, 6000, "linear", function () {
+          enemy2.animate({ right: "450px" }, 6000, "linear", function () {
             // 점수 올리자
             score += 100;
             updateScore(score);
 
             // 적 리셋
-            enemy.css("right", "-50px");
+            enemy2.css("right", "-50px");
             enemyStart();
           });
         }
@@ -226,14 +254,12 @@
   <body>
     <div id="container">
       <img id="start_screen" src="images/start.jpg" alt="Game Start" />
-      <button id="start_button">start</button>
+      <button id="start_button">시작</button>
+
       <div class="sliding-background"></div>
-
-      <img id="hero" src="images/nini.gif" alt="" />
-
-      <img id="enemy" src="images/enemy.gif" alt="" />
-      <img id="enemy2" src="images/enemy2.gif" alt="" />
-
+      <img id="hero" src="images/nini.gif" alt="" style="display: none" />
+      <img id="enemy" src="images/enemy.gif" alt="" style="display: none" />
+      <img id="enemy2" src="images/enemy2.gif" alt="" style="display: none" />
       <div id="gameover_screen">
         Game Over
         <input type="button" value="재시작" />
