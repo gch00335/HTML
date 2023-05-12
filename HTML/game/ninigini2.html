@@ -37,28 +37,28 @@
 
       #start_button {
         position: absolute;
-        top:10%;
+        top: 10%;
         left: 43%;
         padding: 10px 30px;
-    font-size: 25px;
-    color: #fff;
-    background: linear-gradient(to bottom, #7c7a7a, #0f0e0e);
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: all 0.3s ease
+        font-size: 25px;
+        color: #fff;
+        background: linear-gradient(to bottom, #7c7a7a, #0f0e0e);
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        transition: all 0.3s ease;
       }
 
       #start_button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
-}
+        transform: translateY(-2px);
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+      }
 
-#start_button:active {
-    transform: translateY(2px);
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
+      #start_button:active {
+        transform: translateY(2px);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+      }
       .sliding-background {
         z-index: -100;
         position: absolute;
@@ -151,10 +151,9 @@
     </style>
 
     <script>
-    // 음악 자동 재생
-    const backgroundMusic = new Audio("images/마리오 노래.mp3");
+      // 음악 자동 재생
+      const backgroundMusic = new Audio("images/마리오 노래.mp3");
       backgroundMusic.loop = true;
-   
 
       const ENEMY_SPEED_MIN_EASY = 1000;
       const ENEMY_SPEED_MAX_EASY = 3000;
@@ -165,12 +164,12 @@
       $(function () {
         const startButton = $("#start_button");
         const startScreen = $("#start_screen");
-        let hero, hero2, enemy, enemy2 ,score2;
+        let hero, hero2, enemy, enemy2, score2;
 
         startButton.on("click", function () {
           startScreen.hide(); // 시작 화면 숨기기
           startButton.hide(); // 시작 버튼 숨기기
-          score2=$('#score2');
+          score2 = $("#score2");
           hero = $("#hero");
           enemy = $("#enemy");
           hero2 = $("#hero2");
@@ -274,7 +273,10 @@
         }
         function checkGameOver() {
           setInterval(function () {
-            if (isColliding(hero[0], enemy[0])) {
+            if (
+              isColliding(hero[0], enemy[0]) ||
+              isColliding(hero[0], enemy2[0])
+            ) {
               hero.stop();
               enemy.stop();
               $("#gameover_screen").show(); // 게임 오버 시 게임 오버 화면 표시
@@ -287,57 +289,55 @@
         }
 
         function enemyStart() {
-// 게임이 여전히 실행 중인지 확인
-if (!$("#gameover_screen").is(":visible")) {
-          
-          // hero2 출현 주기 설정(점수가 1000단위일때나와서 5초가 있다가 사라짐)
-          if (score >= 1000 && score % 1000 === 0) {
-            hero2.show();
-            setTimeout(function () {
+          // 게임이 여전히 실행 중인지 확인
+          if (!$("#gameover_screen").is(":visible")) {
+            // hero2 출현 주기 설정(점수가 1000단위일때나와서 5초가 있다가 사라짐)
+            if (score >= 1000 && score % 1000 === 0) {
+              hero2.show();
+              setTimeout(function () {
+                hero2.hide();
+              }, 10000); // 이부분 수정해야할듯.. 2초만 있다가 사라짐..
+            } else {
               hero2.hide();
-            }, 10000); // 이부분 수정해야할듯.. 2초만 있다가 사라짐..
-          } else {
-            hero2.hide();
+            }
+
+            // 속도 조절
+            const speed = getRandomNumber(1000, 4000);
+
+            // 적이 오른쪽에서 왼쪽으로 이동 // 괴물오는 거리(주인공과의)
+            enemy.animate({ right: "350px" }, 8000, "linear", function () {
+              // 점수 올리자
+              score += 100;
+              updateScore(score);
+
+              // 적 리셋
+              enemy.css("right", "-50px");
+              enemyStart();
+            });
+
+            enemy2.animate({ right: "450px" }, 6000, "linear", function () {
+              // 점수 올리자
+              score += 100;
+              updateScore(score);
+
+              // 적 리셋
+              enemy2.css("right", "-50px");
+              enemyStart();
+            });
           }
-
-          // 속도 조절
-          const speed = getRandomNumber(1000, 4000);
-
-          // 적이 오른쪽에서 왼쪽으로 이동 // 괴물오는 거리(주인공과의)
-          enemy.animate({ right: "350px" }, 8000, "linear", function () {
-            // 점수 올리자
-            score += 100;
-            updateScore(score);
-
-            // 적 리셋
-            enemy.css("right", "-50px");
-            enemyStart();
-          });
-
-          enemy2.animate({ right: "450px" }, 6000, "linear", function () {
-            // 점수 올리자
-            score += 100;
-            updateScore(score);
-
-            // 적 리셋
-            enemy2.css("right", "-50px");
-            enemyStart();
-          });
         }
-      }
 
         function updateScore(score) {
           $("#score").text(score);
         }
-        const jumpSound = new Audio("images/마리오 점프.mp3")
+        const jumpSound = new Audio("images/마리오 점프.mp3");
         function jump() {
           isJumping = true;
           hero.animate({ bottom: "+=85px" }, { duration: 200 }).animate(
             { bottom: "-=85px" },
             {
-              
               duration: 200,
-         
+
               complete: function () {
                 jumpSound.play(); // 점프 소리 재생
                 isJumping = false;
@@ -359,7 +359,6 @@ if (!$("#gameover_screen").is(":visible")) {
             // console.log(e.key);
           });
         }
-
 
         // 재시작 버튼 클릭 이벤트 핸들러
         $('#gameover_screen input[type="button"]').click(function () {
@@ -387,7 +386,7 @@ if (!$("#gameover_screen").is(":visible")) {
       </div>
 
       <div id="score"></div>
-      <div id="score2" style="display: none" / >SCORE &nbsp &nbsp</div>
+      <div id="score2" style="display: none">SCORE &nbsp &nbsp</div>
       <audio id="background-music" src="images/마리오 노래.mp3" loop></audio>
     </div>
   </body>
