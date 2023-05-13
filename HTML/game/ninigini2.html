@@ -118,6 +118,15 @@
         bottom: 70px;
       }
 
+      #enemy3 {
+        border: 1px solid black;
+        position: absolute;
+        width: 25px;
+        height: 30px;
+        right: 0px;
+        bottom: 70px;
+      }
+
       #gameover_screen {
         position: absolute;
         top: 0;
@@ -233,7 +242,7 @@
       $(function () {
         const startButton = $("#start_button");
         const startScreen = $("#start_screen");
-        let hero, hero2, enemy, enemy2, score2, coinscore1, coin;
+        let hero, hero2, enemy, enemy2, enemy3, score2, coinscore1, coin;
 
         startButton.on("click", function () {
           startScreen.hide(); // 시작 화면 숨기기
@@ -244,6 +253,8 @@
           enemy = $("#enemy");
           hero2 = $("#hero2");
           enemy2 = $("#enemy2");
+          enemy3 = $("#enemy3");
+
           coin = $("#coin");
 
           coin.show();
@@ -252,6 +263,7 @@
           hero.show();
           enemy.show();
           enemy2.show();
+          enemy3.show();
 
           gameStart(); // 게임 시작
         });
@@ -286,7 +298,7 @@
             .addClass("coin")
             .css({
               left: getRandomNumber(0, $("#container").width() - 50) + "px",
-              top: getRandomNumber(0, $("#container").height() - 55) + "px",
+              top: getRandomNumber(0, $("#container").height() - 48) + "px",
             });
 
           coins.push(coin); // 코인 요소를 배열에 추가
@@ -295,7 +307,7 @@
           setTimeout(function () {
             coin.remove(); // 일정 시간 후에 코인 요소를 제거
             coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
-          }, 8000); // 코인이 보이는 시간을 조절합니다. (밀리초 단위)
+          }, 10000); // 코인이 보이는 시간을 조절합니다. (밀리초 단위)
         }
 
         // 코인 충돌 확인 함수
@@ -313,6 +325,16 @@
         //////////////////////////////////////////게임 시작///////////////////////////////
         function gameStart() {
           backgroundMusic.play();
+          $("#score").text(score);
+
+          $("#hero").css({ left: "0px" });
+          $("#enemy").css({ right: "-50px" });
+          $("#enemy2").css({ right: "-50px" });
+          $("#enemy3").css({ right: "-50px" });
+          // 필요한 만큼 캐릭터 위치 초기화 코드를 추가합니다.
+
+          // hero 캐릭터 보이기
+          $("#hero").show();
 
           $("#gameover_screen").hide();
 
@@ -392,17 +414,29 @@
                 isEnemy2Colliding = false; // isEnemy2Colliding 변수를 false로 설정
               }, 1000);
             }
+            if (isColliding(hero2[0], enemy3[0]) && !isEnemy3Colliding) {
+              isEnemy3Colliding = true;
+              enemy3.hide();
+              setTimeout(function () {
+                enemy3.show();
+                enemy3.css("right", "-50px");
+                isEnemy3Colliding = false; // isEnemy3Colliding 변수를 false로 설정
+              }, 1000);
+            }
           }, 1000 / 60);
         }
         function checkGameOver() {
           setInterval(function () {
             if (
               isColliding(hero[0], enemy[0]) ||
-              isColliding(hero[0], enemy2[0])
+              isColliding(hero[0], enemy2[0]) ||
+              isColliding(hero[0], enemy3[0])
             ) {
               hero.stop();
               enemy.stop();
               enemy2.stop();
+              enemy3.stop();
+
               $("#gameover_screen").show(); // 게임 오버 시 게임 오버 화면 표시
             }
           }, 1000 / 60);
@@ -416,7 +450,7 @@
           // 게임이 여전히 실행 중인지 확인
           if (!$("#gameover_screen").is(":visible")) {
             // hero2 출현 주기 설정(점수가 1000단위일때 나와서 15초가 있다가 사라짐)
-            if (score >= 1000 && score % 1000 === 0) {
+            if (score >= 300 && score % 300 === 0) {
               hero2.show();
               setTimeout(function () {
                 hero2.hide();
@@ -432,7 +466,7 @@
             const speed = getRandomNumber(1000, 4000);
 
             // 적이 오른쪽에서 왼쪽으로 이동 // 괴물오는 거리(주인공과의)
-            enemy.animate({ right: "700px" }, 11500, "linear", function () {
+            enemy.animate({ right: "1000px" }, 11500, "linear", function () {
               // 점수 올리자
               score += 100;
               updateScore(score);
@@ -442,13 +476,22 @@
               enemyStart();
             });
 
-            enemy2.animate({ right: "700px" }, 15000, "linear", function () {
+            enemy2.animate({ right: "1000px" }, 15000, "linear", function () {
               // 점수 올리자
               score += 100;
               updateScore(score);
 
               // 적 리셋
               enemy2.css("right", "-50px");
+              enemyStart();
+            });
+            enemy3.animate({ right: "1000px" }, 8000, "linear", function () {
+              // 점수 올리자
+              score += 100;
+              updateScore(score);
+
+              // 적 리셋
+              enemy3.css("right", "-50px");
               enemyStart();
             });
           }
@@ -484,12 +527,14 @@
           } else if (coinscore >= 270 && coinscore < 300) {
             const imageUrl = "images/nini3.gif";
             changeHeroImage(imageUrl);
-          }else if (coinscore >= 300 && coinscore < 330) {
+          } else if (coinscore >= 300 && coinscore < 330) {
             const imageUrl = "images/nini.gif";
             changeHeroImage(imageUrl);
-        } else if (coinscore >= 330 && coinscore < 360) {
-            const imageUrl = "images/nini6.gif";
+          } else if (coinscore >= 330 && coinscore < 360) {
+            const imageUrl = "images/nini.gif";
             changeHeroImage(imageUrl);
+          }
+        }
         //////////////////////////////////////////////////////////////////////////////////////////
         function changeHeroImage(imageUrl) {
           hero.attr("src", imageUrl);
@@ -552,6 +597,7 @@
       <!--적-->
       <img id="enemy" src="images/enemy2.gif" alt="" style="display: none" />
       <img id="enemy2" src="images/enemy2.gif" alt="" style="display: none" />
+      <img id="enemy3" src="images/enemy2.gif" alt="" style="display: none" />
 
       <!--포인트-->
       <img id="coin" src="images/coin.gif" alt="" style="display: none" />
