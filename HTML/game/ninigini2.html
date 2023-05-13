@@ -93,6 +93,11 @@
         width: 80px;
         height: 60px;
       }
+      .coin {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
 
       #enemy {
         border: 1px solid black;
@@ -138,7 +143,7 @@
 
       #score {
         position: absolute;
-        top: 10px;
+        top: 50px;
         right: 10px;
         color: white;
         font-size: 24px;
@@ -146,11 +151,76 @@
 
       #score2 {
         position: absolute;
+        top: 50px;
+        right: 60px;
+        color: white;
+        font-size: 24px;
+      }
+      
+      #coin{ 
+        
+        position: absolute;
+        top: 10px;
+        right: 230px;
+        width: 35px;
+        height: 30px;
+
+      } 
+
+      
+      #coinscore {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: white;
+        font-size: 24px;
+      }
+
+      #coinscore1 {
+        position: absolute;
         top: 10px;
         right: 60px;
         color: white;
         font-size: 24px;
       }
+      
+/*마리오가 점프했을 때 블록이 있으면 (블록을 만들어서 배경에맞게 지나가도록 만들었음) 그 위에 서있게 하려했는데...내가 부족해서 기술적용을 못함.. 후.. */      
+      /*
+      @keyframes slide2 {
+        0% {
+          left: 40%; 
+        } 100% {
+          left: -200px; 
+        }
+      }
+      #block {
+        position: absolute;
+        top: 110px; 
+        left: 400px; 
+        width: 128px; 
+        height: 20px; 
+        background-color: yellow; 
+        animation: slide2 10s linear infinite; 
+      }
+      @keyframes slide3 {
+        0% {
+          left: 110%; 
+        }
+        100% {
+          left: 400px; 
+        }
+      }
+      #block1 {
+        position: absolute;
+        top: 110px; /
+        left: 400px; 
+        width: 128px; 
+        height: 20px;
+        background-color: yellow; /
+        animation: slide3 10s linear infinite; 
+      } */
+
+
     </style>
 
     <script>
@@ -167,17 +237,21 @@
       $(function () {
         const startButton = $("#start_button");
         const startScreen = $("#start_screen");
-        let hero, hero2, enemy, enemy2, score2;
+        let hero, hero2, enemy, enemy2, score2, coinscore1, coin;
 
         startButton.on("click", function () {
           startScreen.hide(); // 시작 화면 숨기기
           startButton.hide(); // 시작 버튼 숨기기
           score2 = $("#score2");
+          coinscore1 = $("#coinscore1");
           hero = $("#hero");
           enemy = $("#enemy");
           hero2 = $("#hero2");
           enemy2 = $("#enemy2");
+          coin= $('#coin');
 
+          coin.show();
+          coinscore1.show();
           score2.show();
           hero.show();
           enemy.show();
@@ -188,6 +262,8 @@
 
         let isJumping = false;
         let score = 0;
+        // 변수 선언 및 초기화
+        let coinscore = 0;
 
         // 키보드 이벤트 처리 함수
         function handleKeyboardEvent(e) {
@@ -206,6 +282,41 @@
           }
         }
 
+        
+        let coins = []; // 코인 요소를 저장하는 배열
+
+function createCoin() {
+  const coin = $("<img>")
+    .attr("src", "images/coin.gif")
+    .addClass("coin")
+    .css({
+      left: getRandomNumber(0, $("#container").width() - 50) + "px",
+      top: getRandomNumber(0, $("#container").height() - 50) + "px",
+    });
+
+  coins.push(coin); // 코인 요소를 배열에 추가
+  $("#container").append(coin); // 코인 요소를 컨테이너에 추가
+
+  setTimeout(function () {
+    coin.remove(); // 일정 시간 후에 코인 요소를 제거
+    coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
+  }, 8000); // 코인이 보이는 시간을 조절합니다. (밀리초 단위)
+}
+
+// 코인 충돌 확인 함수
+function checkCoinCollisions() {
+  coins.forEach(function (coin) {
+    if (isColliding(hero[0], coin[0])) {
+      coin.remove(); // 코인 요소를 제거합니다.
+      coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
+      coinscore += 10; // 코인 점수를 10점 증가시킵니다.
+      updateCoinscore(coinscore); // 코인 점수 표시를 업데이트합니다.
+    }
+  });
+}
+
+
+//////////////////////////////////////////게임 시작
         function gameStart() {
           backgroundMusic.play();
 
@@ -216,9 +327,18 @@
           checkCollisions();
           checkGameOver();
 
+
+
+setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
+  setInterval(checkCoinCollisions, 1000 / 60); // 매 프레임마다 코인 충돌 확인
+  // 나머지 코드...
+
           // 키보드 이벤트 리스너 등록
           $("html").keydown(handleKeyboardEvent);
-        }
+
+        
+  }
+        
 
         function moveHero(direction) {
           const currentPosition = parseInt(hero.css("left"));
@@ -254,10 +374,10 @@
           //     return true;
           //   }
           return !(
-            rect1.bottom < rect2.top + 10 ||
-            rect1.top > rect2.bottom - 10 ||
-            rect1.right < rect2.left + 10 ||
-            rect1.left > rect2.right - 10
+            rect1.bottom < rect2.top + 20 ||
+            rect1.top > rect2.bottom -20 ||
+            rect1.right < rect2.left +20 ||
+            rect1.left > rect2.right -20
           );
         }
 
@@ -302,7 +422,7 @@
         function getRandomNumber(min, max) {
           return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-
+///////////////////////////////// 적관련 속도 및 거리 수정 ///////////////////////////////////
         function enemyStart() {
           // 게임이 여전히 실행 중인지 확인
           if (!$("#gameover_screen").is(":visible")) {
@@ -344,7 +464,15 @@
             });
           }
         }
+// 코인 점수 업데이트 함수
+function updateCoinscore(coinscore) {
+  $("#coinscore").text(coinscore);
+}; // 코인 점수 표시 업데이트
 
+
+
+
+/////////////////////////점수 업데이트
         function updateScore(score) {
           $("#score").text(score);
         }
@@ -353,10 +481,10 @@
         function jump() {
           isJumping = true;
 
-          hero.animate({ bottom: "+=200px" }, { duration: 500 }).animate(
+          hero.animate({ bottom: "+=200px" }, { duration: 650 }).animate(
             { bottom: "-=200px" },
             {
-              duration: 500,
+              duration: 650,
 
               complete: function () {
                 jumpSound.play(); // 점프 소리 재생
@@ -400,6 +528,10 @@
       <!--적-->
       <img id="enemy" src="images/enemy2.gif" alt="" style="display: none" />
       <img id="enemy2" src="images/enemy2.gif" alt="" style="display: none" />
+
+      <!--포인트-->
+      <img id="coin" src="images/coin.gif" alt="" style="display: none" />
+
       <div id="gameover_screen">
         Game Over
         <input type="button" value="재시작" />
@@ -408,6 +540,13 @@
       <div id="score"></div>
       <div id="score2" style="display: none">SCORE &nbsp &nbsp</div>
       <audio id="background-music" src="images/마리오 노래.mp3" loop></audio>
+
+      <div id="block"></div>
+      <div id="block1"></div>
+
+
+      <div id="coinscore"></div>
+      <div id="coinscore1" style="display: none">COIN SCORE &nbsp &nbsp</div>
     </div>
   </body>
 </html>
