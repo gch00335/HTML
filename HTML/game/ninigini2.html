@@ -84,6 +84,7 @@
         bottom: 68px;
         width: 55px;
         height: 70px;
+        background-image: url("images/nini1.gif");
       }
 
       #hero2 {
@@ -94,10 +95,10 @@
         height: 60px;
       }
       .coin {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-}
+        position: absolute;
+        width: 20px;
+        height: 20px;
+      }
 
       #enemy {
         border: 1px solid black;
@@ -156,18 +157,15 @@
         color: white;
         font-size: 24px;
       }
-      
-      #coin{ 
-        
+
+      #coin {
         position: absolute;
         top: 10px;
         right: 230px;
         width: 35px;
         height: 30px;
+      }
 
-      } 
-
-      
       #coinscore {
         position: absolute;
         top: 10px;
@@ -183,8 +181,8 @@
         color: white;
         font-size: 24px;
       }
-      
-/*마리오가 점프했을 때 블록이 있으면 (블록을 만들어서 배경에맞게 지나가도록 만들었음) 그 위에 서있게 하려했는데...내가 부족해서 기술적용을 못함.. 후.. */      
+
+      /*마리오가 점프했을 때 블록이 있으면 (블록을 만들어서 배경에맞게 지나가도록 만들었음) 그 위에 서있게 하려했는데...내가 부족해서 기술적용을 못함.. 후.. */
       /*
       @keyframes slide2 {
         0% {
@@ -219,8 +217,6 @@
         background-color: yellow; /
         animation: slide3 10s linear infinite; 
       } */
-
-
     </style>
 
     <script>
@@ -248,7 +244,7 @@
           enemy = $("#enemy");
           hero2 = $("#hero2");
           enemy2 = $("#enemy2");
-          coin= $('#coin');
+          coin = $("#coin");
 
           coin.show();
           coinscore1.show();
@@ -282,41 +278,39 @@
           }
         }
 
-        
         let coins = []; // 코인 요소를 저장하는 배열
 
-function createCoin() {
-  const coin = $("<img>")
-    .attr("src", "images/coin.gif")
-    .addClass("coin")
-    .css({
-      left: getRandomNumber(0, $("#container").width() - 50) + "px",
-      top: getRandomNumber(0, $("#container").height() - 50) + "px",
-    });
+        function createCoin() {
+          const coin = $("<img>")
+            .attr("src", "images/coin.gif")
+            .addClass("coin")
+            .css({
+              left: getRandomNumber(0, $("#container").width() - 50) + "px",
+              top: getRandomNumber(0, $("#container").height() - 55) + "px",
+            });
 
-  coins.push(coin); // 코인 요소를 배열에 추가
-  $("#container").append(coin); // 코인 요소를 컨테이너에 추가
+          coins.push(coin); // 코인 요소를 배열에 추가
+          $("#container").append(coin); // 코인 요소를 컨테이너에 추가
 
-  setTimeout(function () {
-    coin.remove(); // 일정 시간 후에 코인 요소를 제거
-    coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
-  }, 8000); // 코인이 보이는 시간을 조절합니다. (밀리초 단위)
-}
+          setTimeout(function () {
+            coin.remove(); // 일정 시간 후에 코인 요소를 제거
+            coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
+          }, 8000); // 코인이 보이는 시간을 조절합니다. (밀리초 단위)
+        }
 
-// 코인 충돌 확인 함수
-function checkCoinCollisions() {
-  coins.forEach(function (coin) {
-    if (isColliding(hero[0], coin[0])) {
-      coin.remove(); // 코인 요소를 제거합니다.
-      coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
-      coinscore += 10; // 코인 점수를 10점 증가시킵니다.
-      updateCoinscore(coinscore); // 코인 점수 표시를 업데이트합니다.
-    }
-  });
-}
+        // 코인 충돌 확인 함수
+        function checkCoinCollisions() {
+          coins.forEach(function (coin) {
+            if (isColliding(hero[0], coin[0])) {
+              coin.remove(); // 코인 요소를 제거합니다.
+              coins = coins.filter((c) => c !== coin); // 배열에서 코인 요소 제거
+              coinscore += 10; // 코인 점수를 10점 증가시킵니다.
+              updateCoinscore(coinscore); // 코인 점수 표시를 업데이트합니다.
+            }
+          });
+        }
 
-
-//////////////////////////////////////////게임 시작
+        //////////////////////////////////////////게임 시작///////////////////////////////
         function gameStart() {
           backgroundMusic.play();
 
@@ -327,24 +321,19 @@ function checkCoinCollisions() {
           checkCollisions();
           checkGameOver();
 
-
-
-setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
-  setInterval(checkCoinCollisions, 1000 / 60); // 매 프레임마다 코인 충돌 확인
-  // 나머지 코드...
+          setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
+          setInterval(checkCoinCollisions, 1000 / 60); // 매 프레임마다 코인 충돌 확인
+          // 나머지 코드...
 
           // 키보드 이벤트 리스너 등록
           $("html").keydown(handleKeyboardEvent);
-
-        
-  }
-        
+        }
 
         function moveHero(direction) {
           const currentPosition = parseInt(hero.css("left"));
 
           // 이동할 거리 계산
-          const moveDistance = direction === "left" ? -25 : 25;
+          const moveDistance = direction === "left" ? -20 : 20;
 
           // 새로운 위치 계산
           const newPosition = currentPosition + moveDistance;
@@ -375,9 +364,9 @@ setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
           //   }
           return !(
             rect1.bottom < rect2.top + 20 ||
-            rect1.top > rect2.bottom -20 ||
-            rect1.right < rect2.left +20 ||
-            rect1.left > rect2.right -20
+            rect1.top > rect2.bottom - 20 ||
+            rect1.right < rect2.left + 20 ||
+            rect1.left > rect2.right - 20
           );
         }
 
@@ -422,7 +411,7 @@ setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
         function getRandomNumber(min, max) {
           return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-///////////////////////////////// 적관련 속도 및 거리 수정 ///////////////////////////////////
+        ///////////////////////////////// 적관련 속도 및 거리 수정 ///////////////////////////////////
         function enemyStart() {
           // 게임이 여전히 실행 중인지 확인
           if (!$("#gameover_screen").is(":visible")) {
@@ -464,15 +453,48 @@ setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
             });
           }
         }
-// 코인 점수 업데이트 함수
-function updateCoinscore(coinscore) {
-  $("#coinscore").text(coinscore);
-}; // 코인 점수 표시 업데이트
-
-
-
-
-/////////////////////////점수 업데이트
+        //////////////////// 코인 점수 업데이트 함수///////////////////////////
+        function updateCoinscore(coinscore) {
+          $("#coinscore").text(coinscore);
+          ///////////////////////////////////////////////////////////////////////coin점수마다 캐릭터 바뀜!
+          if (coinscore >= 30 && coinscore < 60) {
+            const imageUrl = "images/nini4.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 60 && coinscore < 90) {
+            const imageUrl = "images/nini.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 90 && coinscore < 120) {
+            const imageUrl = "images/nini5.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 120 && coinscore < 150) {
+            const imageUrl = "images/nini.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 150 && coinscore < 180) {
+            const imageUrl = "images/nini1.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 180 && coinscore < 210) {
+            const imageUrl = "images/nini1.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 210 && coinscore < 240) {
+            const imageUrl = "images/nini7.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 240 && coinscore < 270) {
+            const imageUrl = "images/nini.gif";
+            changeHeroImage(imageUrl);
+          } else if (coinscore >= 270 && coinscore < 300) {
+            const imageUrl = "images/nini3.gif";
+            changeHeroImage(imageUrl);
+          }else if (coinscore >= 300 && coinscore < 330) {
+            const imageUrl = "images/nini.gif";
+            changeHeroImage(imageUrl);
+        } else if (coinscore >= 330 && coinscore < 360) {
+            const imageUrl = "images/nini6.gif";
+            changeHeroImage(imageUrl);
+        //////////////////////////////////////////////////////////////////////////////////////////
+        function changeHeroImage(imageUrl) {
+          hero.attr("src", imageUrl);
+        }
+        /////////////////////////점수 업데이트////////////////////////////////////
         function updateScore(score) {
           $("#score").text(score);
         }
@@ -481,8 +503,8 @@ function updateCoinscore(coinscore) {
         function jump() {
           isJumping = true;
 
-          hero.animate({ bottom: "+=200px" }, { duration: 650 }).animate(
-            { bottom: "-=200px" },
+          hero.animate({ bottom: "+=210px" }, { duration: 650 }).animate(
+            { bottom: "-=210px" },
             {
               duration: 650,
 
@@ -523,7 +545,9 @@ function updateCoinscore(coinscore) {
       <button id="start_button">START</button>
       <!--주인공-->
       <div class="sliding-background"></div>
-      <img id="hero" src="images/nini.gif" alt="" style="display: none" />
+      <div>
+        <img id="hero" src="images/nini.gif" alt="" style="display: none" />
+      </div>
       <img id="hero2" src="images/nini2.gif" alt="" />
       <!--적-->
       <img id="enemy" src="images/enemy2.gif" alt="" style="display: none" />
@@ -543,7 +567,6 @@ function updateCoinscore(coinscore) {
 
       <div id="block"></div>
       <div id="block1"></div>
-
 
       <div id="coinscore"></div>
       <div id="coinscore1" style="display: none">COIN SCORE &nbsp &nbsp</div>
