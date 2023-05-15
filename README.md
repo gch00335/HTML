@@ -16,8 +16,9 @@ https://gch00335.github.io/HTML/HTML/game/ninigini2.html
 
 
       Game point :
-      [1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가바뀝니다.
-      [2] &nbsp 4초에 한번씩[F]키를 누르면 적을 물리치는 공격을 발사할 수있습니다.
+      [1] coinscore 점수가 올라갈수록 마리오 캐릭터가바뀝니다.
+      [2] 4초에 한번씩[F]키를 누르면 적을 물리치는 공격을 발사할 수있습니다.
+        (꼭 천천히 4초 간격으로 눌러줘야합니다 ) 
     
 
 
