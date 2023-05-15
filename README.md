@@ -5,10 +5,25 @@
 
 
 
-
+게임실행 링크 : 
 https://gch00335.github.io/HTML/HTML/game/ninigini2.html
 
+게임방법 :
 
+
+      <b>Space bar</b> = '점프' &nbsp/ &nbsp ← &nbsp→&nbsp =&nbsp&nbsp
+      '&nbsp방향키&nbsp'
+
+      Score = "지나간 적 점수 " / Coinscore = "동전을 먹은 점수"
+  
+
+
+      Game point : <br />[1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가
+      바뀝니다.
+      <br />
+      [2] &nbsp 4초에 한번씩[F]키를 누르면 적을 물리치는 공격을 발사할 수
+      있습니다.
+    
 
 
 
