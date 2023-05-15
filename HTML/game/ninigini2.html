@@ -135,7 +135,7 @@
 
       #hero {
         position: absolute;
-       
+  
         left: 20px;
         bottom: 63px;
         width: 55px;
@@ -671,12 +671,7 @@
           backgroundMusic.pause();
           backgroundMusic.currentTime = 0;
 
-          // 캐릭터와 적 숨기기
-          hero.hide();
-          hero2.hide();
-          enemy.hide();
-          enemy2.hide();
-          enemy3.hide();
+         
 
           // 코인 제거
           coins.forEach((coin) => coin.remove());
@@ -742,7 +737,7 @@
       Game point : <br />[1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가
       바뀝니다.
       <br />
-      [2] &nbsp 4초에 한번씩 [F]키를 누르면 적을 물리치는 공격을 발사할 수
+      [2] &nbsp 4초에 한번씩[F]키를 누르면 적을 물리치는 공격을 발사할 수
       있습니다.
     </div>
     <div id="container">
@@ -790,6 +785,3 @@
     </div>
   </body>
 </html>
-
-
-  
