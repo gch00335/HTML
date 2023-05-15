@@ -22,7 +22,6 @@ https://gch00335.github.io/HTML/HTML/game/ninigini2.html
       [2] 4초에 한번씩[F]키를 누르면 적을 물리치는 공격을 발사할 수있습니다.
         (꼭 천천히 4초 간격으로 눌러줘야합니다 ) 
     
- <img id="hero" src="images/nini.gif" alt="" />
 
 
  ![Footer](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=footer)
