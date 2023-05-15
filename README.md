@@ -1,4 +1,4 @@
-[header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section&text=NiniJini-GitHub&animation=fadeIn)
+ ![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section&text=NiniJini-GitHub&animation=fadeIn)
  
 
  <hr>
