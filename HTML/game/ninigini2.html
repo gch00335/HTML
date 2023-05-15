@@ -135,9 +135,9 @@
 
       #hero {
         position: absolute;
-        border: 1px solid black;
+       
         left: 20px;
-        bottom: 65px;
+        bottom: 63px;
         width: 55px;
         height: 70px;
         background-image: url("images/nini1.gif");
@@ -157,7 +157,7 @@
       }
 
       #enemy {
-        border: 1px solid black;
+     
         position: absolute;
         width: 25px;
         height: 30px;
@@ -166,7 +166,6 @@
       }
 
       #enemy2 {
-        border: 1px solid black;
         position: absolute;
         width: 25px;
         height: 30px;
@@ -175,7 +174,7 @@
       }
 
       #enemy3 {
-        border: 1px solid black;
+    
         position: absolute;
         width: 25px;
         height: 30px;
@@ -231,7 +230,6 @@
         height: 80px;
         top: 35px;
         right: 150px;
-        color: white;
         font-size: 24px;
       }
 
@@ -406,6 +404,7 @@
         //////////////////////////////////////////게임 시작///////////////////////////////
         function gameStart() {
           isJumping = false;
+          lisFKeyPressed = false;
           backgroundMusic.play();
           $("#score").text(score);
 
@@ -417,7 +416,7 @@
 
           // hero 캐릭터 보이기
           $("#hero").show();
-
+          score2.show();
           $("#gameover_screen").hide();
 
           setKeyboardEvent();
@@ -508,12 +507,12 @@
               enemy2.show(); // enemy2 다시 나타남
 
               enemy3.show(); // enemy3 다시 나타남
-              enemy.css("right", "-50px"); // enemy 초기 위치로 이동
-              enemy2.css("right", "-50px"); // enemy2 초기 위치로 이동
-              enemy3.css("right", "-50px"); // enemy3 초기 위치로 이동
-              isFKeyPressed = false; // 애니메이션이 완료되면 'f' 키를 누른 상태를 해제
+              enemy.css("right", "-150px"); // enemy 초기 위치로 이동
+              enemy2.css("right", "-150px"); // enemy2 초기 위치로 이동
+              enemy3.css("right", "-150px"); // enemy3 초기 위치로 이동
             });
           }
+          isFKeyPressed = false; // 애니메이션이 완료되면 'f' 키를 누른 상태를 해제
         }
 
         // 충돌 확인 함수에 충돌 처리 함수 추가
@@ -528,6 +527,7 @@
             }
           }, 1000 / 60);
         }
+
         function checkGameOver() {
           setInterval(function () {
             if (
@@ -540,6 +540,7 @@
               enemy2.stop();
               enemy3.stop();
               $("#gameover_screen").show(); // 게임 오버 시 게임 오버 화면 표시
+              score2.hide();
             }
           }, 1000 / 60);
         }
@@ -741,7 +742,8 @@
       Game point : <br />[1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가
       바뀝니다.
       <br />
-      [2] &nbsp [F]키를 누르면 적을 물리치는 공격을 발사할 수 있습니다.
+      [2] &nbsp 4초에 한번씩[F]키를 누르면 적을 물리치는 공격을 발사할 수
+      있습니다.
     </div>
     <div id="container">
       <img id="start_screen" src="images/start.jpg" alt="Game Start" />
@@ -788,3 +790,6 @@
     </div>
   </body>
 </html>
+
+
+  
