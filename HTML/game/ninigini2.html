@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>니니찌니의 마리오</title>
     <script
       src="https://code.jquery.com/jquery-3.6.4.js"
       integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
@@ -12,18 +12,52 @@
     ></script>
     <style>
       body {
-        background-color: #000000;
+        background-image: url("images/background.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100vh;
       }
+      #text1 {
+        position: absolute;
+        top: 24%;
+        left: 25%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        font-size: large;
 
+        color: #ffffff;
+      }
+
+      #text2 {
+        position: absolute;
+        top: 27%;
+        left: 25%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        font-size: large;
+
+        color: #ffffff;
+      }
+
+      #text3 {
+        position: absolute;
+        top: 73%;
+        left: 45%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        font-size: large;
+
+        color: #ffffff;
+      }
       #container {
         position: relative;
+        border: 10px solid rgb(255, 255, 255);
         width: 900px;
         height: 350px;
-        border: 1px solid black;
         overflow: hidden; /* 테두리 외부를 가리키는 부분을 숨김 */
       }
 
@@ -59,6 +93,14 @@
         transform: translateY(2px);
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
       }
+
+      #myinfo {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+        width: 800px;
+        height: 300px;
+      }
       .sliding-background {
         z-index: -100;
         position: absolute;
@@ -75,6 +117,21 @@
         to {
           transform: translate(-500px, 0);
         }
+      }
+      #heart2{
+        position: absolute;
+        top: 20px;
+        left: 60px;
+        width: 50px;
+        height: 50px;
+      }
+      #heart1{
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        width: 50px;
+        height: 50px;
+    
       }
 
       #hero {
@@ -145,6 +202,16 @@
 
       #gameover_screen input[type="button"] {
         padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ffffff;
+        border: none;
+        cursor: pointer;
+      }
+
+      #gameover_screen input[type="restartButton"] {
+        padding: 10px 20px;
+        width: 85px;
+        height: 20px;
         font-size: 16px;
         background-color: #ffffff;
         border: none;
@@ -247,6 +314,15 @@
         startButton.on("click", function () {
           startScreen.hide(); // 시작 화면 숨기기
           startButton.hide(); // 시작 버튼 숨기기
+
+          // 초기화
+          score = 0;
+          coinscore = 0;
+
+          // score와 coinscore 업데이트
+          updateScore(score);
+          updateCoinscore(coinscore);
+
           score2 = $("#score2");
           coinscore1 = $("#coinscore1");
           hero = $("#hero");
@@ -298,7 +374,7 @@
             .addClass("coin")
             .css({
               left: getRandomNumber(0, $("#container").width() - 50) + "px",
-              top: getRandomNumber(0, $("#container").height() - 48) + "px",
+              top: getRandomNumber(0, $("#container").height() - 42) + "px",
             });
 
           coins.push(coin); // 코인 요소를 배열에 추가
@@ -343,9 +419,8 @@
           checkCollisions();
           checkGameOver();
 
-          setInterval(createCoin, 2000); // 2초마다 새로운 코인 생성
+          setInterval(createCoin, 4000); // 2초마다 새로운 코인 생성
           setInterval(checkCoinCollisions, 1000 / 60); // 매 프레임마다 코인 충돌 확인
-          // 나머지 코드...
 
           // 키보드 이벤트 리스너 등록
           $("html").keydown(handleKeyboardEvent);
@@ -355,7 +430,7 @@
           const currentPosition = parseInt(hero.css("left"));
 
           // 이동할 거리 계산
-          const moveDistance = direction === "left" ? -20 : 20;
+          const moveDistance = direction === "left" ? -10 : 10;
 
           // 새로운 위치 계산
           const newPosition = currentPosition + moveDistance;
@@ -391,37 +466,58 @@
             rect1.left > rect2.right - 20
           );
         }
+        /////////////////// [장풍] /// 'f'키를 누르면 발사되는데 3초에 한번밖에 안됨!
+        // 전역 변수
+        let isFKeyPressed = false;
 
-        let isEnemy2Colliding = false;
+        // 'f' 키 이벤트 처리
+        $(document).keydown(function (event) {
+          if (event.key === "f" && !isFKeyPressed) {
+            isFKeyPressed = true;
+            handleCollision();
+          }
+        });
+        // 충돌 처리 함수
+        function handleCollision() {
+          if (isColliding(hero2[0], enemy[0])) {
+            enemy.hide(); // enemy 사라짐
+          }
 
-        //hero2와 적이 충돌했을 때 물리쳐서 다시 나타나게 하는 코드
+          if (isColliding(hero2[0], enemy2[0])) {
+            enemy2.hide(); // enemy2 사라짐
+          }
+
+          if (isColliding(hero2[0], enemy3[0])) {
+            enemy3.hide(); // enemy3 사라짐
+          }
+
+          hero2.hide(); // hero 사라짐
+
+          if (isFKeyPressed) {
+            // hero2 앞으로 발사
+            hero2.css("left", hero.position().left + "px"); // hero2의 위치를 hero와 동일하게 설정
+            hero2.show().animate({ left: "+=1000" }, 3000, function () {
+              enemy.show(); // enemy 다시 나타남
+              enemy2.show(); // enemy2 다시 나타남
+
+              enemy3.show(); // enemy3 다시 나타남
+              enemy.css("right", "-50px"); // enemy 초기 위치로 이동
+              enemy2.css("right", "-50px"); // enemy2 초기 위치로 이동
+              enemy3.css("right", "-50px"); // enemy3 초기 위치로 이동
+            isFKeyPressed = false; // 애니메이션이 완료되면 'f' 키를 누른 상태를 해제
+            });
+          }
+        }
+
+        // 충돌 확인 함수에 충돌 처리 함수 추가
         function checkCollisions() {
           setInterval(function () {
-            if (isColliding(hero2[0], enemy[0])) {
-              enemy.hide();
-              setTimeout(function () {
-                enemy.show();
-                enemy.css("right", "-50px");
-              }, 1000);
-            }
-
-            if (isColliding(hero2[0], enemy2[0]) && !isEnemy2Colliding) {
-              isEnemy2Colliding = true;
-              enemy2.hide();
-              setTimeout(function () {
-                enemy2.show();
-                enemy2.css("right", "-50px");
-                isEnemy2Colliding = false; // isEnemy2Colliding 변수를 false로 설정
-              }, 1000);
-            }
-            if (isColliding(hero2[0], enemy3[0]) && !isEnemy3Colliding) {
-              isEnemy3Colliding = true;
-              enemy3.hide();
-              setTimeout(function () {
-                enemy3.show();
-                enemy3.css("right", "-50px");
-                isEnemy3Colliding = false; // isEnemy3Colliding 변수를 false로 설정
-              }, 1000);
+            if (
+              isColliding(hero2[0], enemy[0]) ||
+              isColliding(hero2[0], enemy2[0]) ||
+              isColliding(hero2[0], enemy3[0])
+            ) {
+              handleCollision();
             }
           }, 1000 / 60);
         }
@@ -436,7 +532,6 @@
               enemy.stop();
               enemy2.stop();
               enemy3.stop();
-
               $("#gameover_screen").show(); // 게임 오버 시 게임 오버 화면 표시
             }
           }, 1000 / 60);
@@ -449,19 +544,6 @@
         function enemyStart() {
           // 게임이 여전히 실행 중인지 확인
           if (!$("#gameover_screen").is(":visible")) {
-            // hero2 출현 주기 설정(점수가 1000단위일때 나와서 15초가 있다가 사라짐)
-            if (score >= 300 && score % 300 === 0) {
-              hero2.show();
-              setTimeout(function () {
-                hero2.hide();
-                setTimeout(function () {
-                  hero2.show();
-                });
-              }, 15000); // 15초 동안 유지되도록 설정하고싶은데 ^^* 7초가 한계 이유를 모르겠음..포기
-            } else {
-              hero2.hide();
-            }
-
             // 속도 조절
             const speed = getRandomNumber(1000, 4000);
 
@@ -563,28 +645,97 @@
 
         // 키보드 이벤트 정의
         function setKeyboardEvent() {
-          $("html").keydown(function (e) {
-            switch (e.key) {
-              case " ":
-                if (!isJumping) {
-                  jump();
-                }
-                break;
-            }
-            // console.log(e.key);
-          });
+          $("html")
+            .off("keydown")
+            .on("keydown", function (e) {
+              switch (e.key) {
+                case " ":
+                  if (!isJumping) {
+                    jump();
+                  }
+                  break;
+              }
+              // console.log(e.key);
+            });
         }
+        // 재시작 버튼 클릭 시 게임을 리셋하는 함수
+        function resetGame() {
+          // 음악 정지
+          backgroundMusic.pause();
+          backgroundMusic.currentTime = 0;
 
-        // 재시작 버튼 클릭 이벤트 핸들러
-        $('#gameover_screen input[type="button"]').click(function () {
-          $("#gameover_screen").hide(); // 게임 오버 화면 숨김
-          gameStart(); // 게임 재시작
+          // 캐릭터와 적 숨기기
+          hero.hide();
+          hero2.hide();
+          enemy.hide();
+          enemy2.hide();
+          enemy3.hide();
+
+          // 코인 제거
+          coins.forEach((coin) => coin.remove());
+          coins = [];
+
+          // 점수와 코인 점수 초기화
+          score = 0;
+          coinscore = 0;
+          updateScore(score);
+          updateCoinscore(coinscore);
+          gameStart();
+        }
+        // 재시작 버튼 클릭 이벤트 처리
+        $('#gameover_screen input[type="restartButton"]').click(function () {
+          // 게임 초기화 로직
+          resetGame();
         });
+        // 전역 변수
+let heartCount = 2;
+
+        // 이어하기 버튼 클릭 이벤트 핸들러
+        $('#gameover_screen input[type="button"]')
+          .off()
+          .click(function () {
+            if (heartCount > 0) {
+            $("#gameover_screen").hide(); // 게임 오버 화면 숨김
+            gameStart(); // 게임 재시작
+            heartCount--; // 하트 개수 감소
+           updateHeartCount(); // 하트 개수 업데이트
+            }
+          });
+          // 하트 개수 업데이트 함수
+function updateHeartCount() {
+  // 하트 개수에 따라 화면에 보여지는 하트 수 조정
+  if (heartCount === 2) {
+    $("#heart1").show();
+    $("#heart2").show();
+  } else if (heartCount === 1) {
+    $("#heart1").show();
+    $("#heart2").hide();
+  } else {
+    $("#heart1").hide();
+    $("#heart2").hide();
+    $('#gameover_screen input[type="button"]').hide();
+  }
+}
       });
     </script>
   </head>
 
   <body>
+    <div id="text1">
+      <b>Space bar</b> = '점프' &nbsp/ &nbsp ← &nbsp→&nbsp =&nbsp&nbsp
+      '&nbsp방향키&nbsp'
+    </div>
+    <div id="text2">
+      Score = "지나간 적 점수 " / Coinscore = "동전을 먹은 점수"
+    </div>
+
+    <div id="text3">
+      Game point : <br />[1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가
+      바뀝니다.
+      <br />
+      [2] &nbsp 캐릭터가 바뀌었을때에 한번씩 [F]키를 누르면 적을 물리치는 공격을 발사할 수
+      있습니다.
+    </div>
     <div id="container">
       <img id="start_screen" src="images/start.jpg" alt="Game Start" />
       <button id="start_button">START</button>
@@ -593,18 +744,23 @@
       <div>
         <img id="hero" src="images/nini.gif" alt="" style="display: none" />
       </div>
-      <img id="hero2" src="images/nini2.gif" alt="" />
+      <img id="hero2" src="images/nini2.gif" alt="" style="display: none" />
       <!--적-->
       <img id="enemy" src="images/enemy2.gif" alt="" style="display: none" />
       <img id="enemy2" src="images/enemy2.gif" alt="" style="display: none" />
       <img id="enemy3" src="images/enemy2.gif" alt="" style="display: none" />
+      <img id="heart1" src="images/heart.gif" alt="" />
+      <img id="heart2" src="images/heart.gif" alt="" />
+
 
       <!--포인트-->
       <img id="coin" src="images/coin.gif" alt="" style="display: none" />
 
       <div id="gameover_screen">
         Game Over
-        <input type="button" value="재시작" />
+        <input type="button" value="이어서 하기" />
+        <input id="restartButton" type="restartButton" value="재시작하기" />
+        <img id="myinfo" src="images/my_info.jpg" alt="내 정보" />
       </div>
 
       <div id="score"></div>
