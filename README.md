@@ -1,8 +1,8 @@
  ![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section&text=NiniJini-GitHub&animation=fadeIn)
  
  
- <h1>  nini jini MARIO !!!!!! 😎😎</h1>
- <br> [2023.05.11 ~ 05.15 project]</br>
+ <h1>  nini jini MARIO !!!!!! 😎😎 <br> [2023.05.11 ~ 05.15 project]</br></h1>
+
 
 
 
