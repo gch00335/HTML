@@ -12,6 +12,9 @@ https://gch00335.github.io/HTML/HTML/game/ninigini2.html
 
 ## 💻 게임방법 :
 
+버섯을 피해 이동하며 코인을 먹는 게임입니다. 
+
+
       <이동> 
       - Space bar = '점프' / ←   →  = '방향키'
       - Score = "지나간 적 점수 " / Coinscore = "동전을 먹은 점수"
