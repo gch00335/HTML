@@ -118,20 +118,19 @@
           transform: translate(-500px, 0);
         }
       }
-      #heart2{
+      #heart2 {
         position: absolute;
         top: 20px;
         left: 60px;
         width: 50px;
         height: 50px;
       }
-      #heart1{
+      #heart1 {
         position: absolute;
         top: 20px;
         left: 10px;
         width: 50px;
         height: 50px;
-    
       }
 
       #hero {
@@ -228,8 +227,10 @@
 
       #score2 {
         position: absolute;
-        top: 50px;
-        right: 60px;
+        width: 95px;
+        height: 80px;
+        top: 35px;
+        right: 150px;
         color: white;
         font-size: 24px;
       }
@@ -237,7 +238,7 @@
       #coin {
         position: absolute;
         top: 10px;
-        right: 230px;
+        right: 180px;
         width: 35px;
         height: 30px;
       }
@@ -330,9 +331,13 @@
           hero2 = $("#hero2");
           enemy2 = $("#enemy2");
           enemy3 = $("#enemy3");
+          heart1 = $("#heart1");
+          heart2 = $("#heart2");
 
           coin = $("#coin");
 
+          heart1.show();
+          heart2.show();
           coin.show();
           coinscore1.show();
           score2.show();
@@ -469,11 +474,12 @@
         /////////////////// [장풍] /// 'f'키를 누르면 발사되는데 3초에 한번밖에 안됨!
         // 전역 변수
         let isFKeyPressed = false;
-
+        const fSound = new Audio("images/마리오 공격효과음.mp3");
         // 'f' 키 이벤트 처리
         $(document).keydown(function (event) {
           if (event.key === "f" && !isFKeyPressed) {
             isFKeyPressed = true;
+            fSound.play(); // 점프 소리 재생
             handleCollision();
           }
         });
@@ -504,7 +510,7 @@
               enemy.css("right", "-50px"); // enemy 초기 위치로 이동
               enemy2.css("right", "-50px"); // enemy2 초기 위치로 이동
               enemy3.css("right", "-50px"); // enemy3 초기 위치로 이동
-            isFKeyPressed = false; // 애니메이션이 완료되면 'f' 키를 누른 상태를 해제
+              isFKeyPressed = false; // 애니메이션이 완료되면 'f' 키를 누른 상태를 해제
             });
           }
         }
@@ -629,14 +635,13 @@
 
         function jump() {
           isJumping = true;
-
+          jumpSound.play(); // 점프 소리 재생
           hero.animate({ bottom: "+=210px" }, { duration: 650 }).animate(
             { bottom: "-=210px" },
             {
               duration: 650,
 
               complete: function () {
-                jumpSound.play(); // 점프 소리 재생
                 isJumping = false;
               },
             }
@@ -684,38 +689,40 @@
         }
         // 재시작 버튼 클릭 이벤트 처리
         $('#gameover_screen input[type="restartButton"]').click(function () {
+          const imageUrl = "images/nini.gif";
+          changeHeroImage(imageUrl);
           // 게임 초기화 로직
           resetGame();
         });
         // 전역 변수
-let heartCount = 2;
+        let heartCount = 2;
 
         // 이어하기 버튼 클릭 이벤트 핸들러
         $('#gameover_screen input[type="button"]')
           .off()
           .click(function () {
             if (heartCount > 0) {
-            $("#gameover_screen").hide(); // 게임 오버 화면 숨김
-            gameStart(); // 게임 재시작
-            heartCount--; // 하트 개수 감소
-           updateHeartCount(); // 하트 개수 업데이트
+              $("#gameover_screen").hide(); // 게임 오버 화면 숨김
+              gameStart(); // 게임 재시작
+              heartCount--; // 하트 개수 감소
+              updateHeartCount(); // 하트 개수 업데이트
             }
           });
-          // 하트 개수 업데이트 함수
-function updateHeartCount() {
-  // 하트 개수에 따라 화면에 보여지는 하트 수 조정
-  if (heartCount === 2) {
-    $("#heart1").show();
-    $("#heart2").show();
-  } else if (heartCount === 1) {
-    $("#heart1").show();
-    $("#heart2").hide();
-  } else {
-    $("#heart1").hide();
-    $("#heart2").hide();
-    $('#gameover_screen input[type="button"]').hide();
-  }
-}
+        // 하트 개수 업데이트 함수
+        function updateHeartCount() {
+          // 하트 개수에 따라 화면에 보여지는 하트 수 조정
+          if (heartCount === 2) {
+            $("#heart1").show();
+            $("#heart2").show();
+          } else if (heartCount === 1) {
+            $("#heart1").show();
+            $("#heart2").hide();
+          } else {
+            $("#heart1").hide();
+            $("#heart2").hide();
+            $('#gameover_screen input[type="button"]').hide();
+          }
+        }
       });
     </script>
   </head>
@@ -733,8 +740,8 @@ function updateHeartCount() {
       Game point : <br />[1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가
       바뀝니다.
       <br />
-      [2] &nbsp 캐릭터가 바뀌었을때에 한번씩 [F]키를 누르면 적을 물리치는 공격을 발사할 수
-      있습니다.
+      [2] &nbsp 캐릭터가 바뀌었을때에 한번씩 [F]키를 누르면 적을 물리치는 공격을
+      발사할 수 있습니다.
     </div>
     <div id="container">
       <img id="start_screen" src="images/start.jpg" alt="Game Start" />
@@ -749,9 +756,8 @@ function updateHeartCount() {
       <img id="enemy" src="images/enemy2.gif" alt="" style="display: none" />
       <img id="enemy2" src="images/enemy2.gif" alt="" style="display: none" />
       <img id="enemy3" src="images/enemy2.gif" alt="" style="display: none" />
-      <img id="heart1" src="images/heart.gif" alt="" />
-      <img id="heart2" src="images/heart.gif" alt="" />
-
+      <img id="heart1" src="images/heart.gif" alt="" style="display: none" />
+      <img id="heart2" src="images/heart.gif" alt="" style="display: none" />
 
       <!--포인트-->
       <img id="coin" src="images/coin.gif" alt="" style="display: none" />
@@ -764,6 +770,13 @@ function updateHeartCount() {
       </div>
 
       <div id="score"></div>
+      <img
+        id="score2"
+        src="images/score-black.png"
+        alt=""
+        style="display: none"
+      />
+      <!---->
       <div id="score2" style="display: none">SCORE &nbsp &nbsp</div>
       <audio id="background-music" src="images/마리오 노래.mp3" loop></audio>
 
@@ -771,7 +784,7 @@ function updateHeartCount() {
       <div id="block1"></div>
 
       <div id="coinscore"></div>
-      <div id="coinscore1" style="display: none">COIN SCORE &nbsp &nbsp</div>
+      <div id="coinscore1" style="display: none">&nbsp &nbsp</div>
     </div>
   </body>
 </html>
