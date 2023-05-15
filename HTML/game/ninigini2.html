@@ -137,7 +137,7 @@
         position: absolute;
         border: 1px solid black;
         left: 20px;
-        bottom: 68px;
+        bottom: 65px;
         width: 55px;
         height: 70px;
         background-image: url("images/nini1.gif");
@@ -405,6 +405,7 @@
 
         //////////////////////////////////////////게임 시작///////////////////////////////
         function gameStart() {
+          isJumping = false;
           backgroundMusic.play();
           $("#score").text(score);
 
@@ -740,8 +741,7 @@
       Game point : <br />[1] &nbsp coinscore 점수가 올라갈수록 마리오 캐릭터가
       바뀝니다.
       <br />
-      [2] &nbsp  [F]키를 누르면 적을 물리치는 공격을
-      발사할 수 있습니다.
+      [2] &nbsp [F]키를 누르면 적을 물리치는 공격을 발사할 수 있습니다.
     </div>
     <div id="container">
       <img id="start_screen" src="images/start.jpg" alt="Game Start" />
