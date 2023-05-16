@@ -1,245 +1,71 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>니니찌니 Movie Details</title>
+    <title>Movie Details</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    <script
-    src="https://code.jquery.com/jquery-3.6.4.js"
-    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-    crossorigin="anonymous"
-  ></script>
-    
+    <style>
   
-  <style>
- 
- body {
-       background-color: rgb(255, 255, 255);
-     }
-     .container {
-       display: flex;
-       flex-wrap: wrap;
-       justify-content: flex-start;
-       margin-left: -10px;
-     }
-     #div0 {
-       display: flex;
-       align-items: center;
-       background-color: rgb(0, 0, 0);
-       height: 50px;
-       color: rgb(255, 255, 255);
-       text-indent: 20px;
-      
-     }
-     #box {
-       padding: 10px;
-       background-color: #ffffff;
-     }
-   
-     .card {
-       width: 190px;
-       height: 260px;
-       border: 1px solid #ccc;
-       padding: 10px;
-       margin-bottom: 10px;
-       cursor: pointer;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       
-       margin-right: 10px;
-       margin-left: 10px;
-       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
-     }
-   
-     .card img {
-       width: 180px;
-       height: 190px;
-       margin-bottom: 10px;
-       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
-     }
-   
-     .card .movie-details {
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-     }
-   
-     .card h3 {
-       margin-top: 5px;
-       margin-bottom: 5px;
-       text-align: center;
-       font-size: 13px; /* Adjust font size */
-     }
-     .card img:hover {
-  animation: shake 1s;
-}
-    </style>
       
     </style>
   </head>
-  <body>
+   <body>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <div id="movie-details" class="movie-details"></div>
-          <<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upcoming Movies</title>
-    <script
-      src="https://code.jquery.com/jquery-3.6.4.js"
-      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-      crossorigin="anonymous"
-    ></script>
+        </div>
+      </div>
+    </div>
 
-    <style>
-      body {
-       background-color: rgb(255, 255, 255);
-     }
-     .container {
-       display: flex;
-       flex-wrap: wrap;
-       justify-content: flex-start;
-       margin-left: -10px;
-     }
-     #div0 {
-       display: flex;
-       align-items: center;
-       background-color: rgb(0, 0, 0);
-       height: 50px;
-       color: rgb(255, 255, 255);
-       text-indent: 20px;
-      
-     }
-     #box {
-       padding: 10px;
-       background-color: #ffffff;
-     }
-   
-     .card {
-       width: 190px;
-       height: 260px;
-       border: 1px solid #ccc;
-       padding: 10px;
-       margin-bottom: 10px;
-       cursor: pointer;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       
-       margin-right: 10px;
-       margin-left: 10px;
-       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
-     }
-   
-     .card img {
-       width: 180px;
-       height: 190px;
-       margin-bottom: 10px;
-       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
-     }
-   
-     .card .movie-details {
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-     }
-   
-     .card h3 {
-       margin-top: 5px;
-       margin-bottom: 5px;
-       text-align: center;
-       font-size: 13px; /* Adjust font size */
-     }
-     .card img:hover {
-  animation: shake 1s;
-}
-
-@keyframes shake {
-  0% { transform: translateY(0); }
-  10% { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
-}
-       </style>
-   
-   <script>
-         let page = 1; // 현재 페이지
-      const moviesPerPage = 8; // 한 페이지당 영화 개수
-      let moviesData; // 전체 영화 데이터
-
-      async function fetchMovies() {
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=a64533e7ece6c72731da47c9c8bc691f&language=ko-KR&page=${page}`
-        );
-        const data = await response.json();
-        moviesData = data.results;
-        displayMovies();
-      }
-
-      function displayMovies() {
-        const container = document.createElement("div");
-        container.classList.add("container");
-
-        const start = (page - 1) * moviesPerPage;
-        const end = start + moviesPerPage;
-        const movies = moviesData.slice(start, end);
-
-        movies.forEach((movie) => {
-          const card = document.createElement("div");
-          card.classList.add("card");
-          card.dataset.movieid = movie.id;
-
+ 
+    <script>
+        // URL에서 영화 ID 가져오기
+        const urlParams = new URLSearchParams(window.location.search);
+        const movieId = urlParams.get("movieid");
+  
+        async function fetchMovieDetails() {
+          const response = await fetch(
+            `https://api.themoviedb.org/3/movie/${movieId}?api_key=a64533e7ece6c72731da47c9c8bc691f&language=ko-KR`
+          );
+          const movie = await response.json();
+          displayMovieDetails(movie);
+        }
+  
+        function displayMovieDetails(movie) {
+          const container = document.createElement("div");
+          container.classList.add("container");
+  
           const poster = document.createElement("img");
           poster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
           poster.alt = movie.title;
-
-          const movieDetails = document.createElement("div");
-          movieDetails.classList.add("movie-details");
-
+  
           const title = document.createElement("h3");
           title.textContent = movie.title;
-
+  
           const releaseDate = document.createElement("p");
           releaseDate.textContent = "개봉일: " + movie.release_date;
+         
+    
+          const rating = document.createElement("p");
+        rating.textContent = "평점: " + movie.vote_average.toFixed(1);
+        const overview = document.createElement("p");
+  overview.textContent = "개요: " + movie.overview;
 
-          movieDetails.appendChild(title);
-          movieDetails.appendChild(releaseDate);
+  container.appendChild(poster);
+  container.appendChild(title);
+  container.appendChild(releaseDate);
+  container.appendChild(rating);
+  container.appendChild(overview);
 
-          card.appendChild(poster);
-          card.appendChild(movieDetails);
+  document.body.appendChild(container);
+}
 
-          // 클릭 이벤트 처리기 추가
-          card.addEventListener("click", () => {
-            handleMovieClick(movie.id);
-          });
-
-          container.appendChild(card);
-        });
-
-        document.body.appendChild(container);
-      }
-
-      // 포스터 클릭 이벤트 처리
-      function handleMovieClick(movieId) {
-        // 다른 페이지로 이동하면서 영화 정보를 전달
-        window.location.href = `exam05-1.html?movieid=${movieId}`;
-      }
-
-      document.addEventListener("DOMContentLoaded", function () {
-        fetchMovies();
-      });
-  </script>
-     </head>
-   
-    <body><div id="div0"><b>🎞NINIJINI MOVIE🎞</b></div>
-      <button class="load-more-button" onclick="loadMoreMovies()">더 보기</button></body>
-  </body>
-   
-    </html>
+document.addEventListener("DOMContentLoaded", function () {
+  fetchMovieDetails();
+});
+      </script>
   </body>
 </html>
