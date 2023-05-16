@@ -119,6 +119,8 @@
   
         const releaseDate = document.createElement("p");
         releaseDate.textContent = "개봉일: " + movie.release_date;
+
+        
   
         movieDetails.appendChild(title);
         movieDetails.appendChild(releaseDate);
@@ -129,7 +131,7 @@
         // 클릭 이벤트 처리기 추가
         card.addEventListener("click", () => {
           // 다른 페이지로 이동하면서 영화 정보를 전달
-          window.location.href = `05-1.html?movieid=${movie.id}`;
+          window.location.href = `exam05-1.html?movieid=${movie.id}`;
         });
   
         container.appendChild(card);
