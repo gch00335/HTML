@@ -4,6 +4,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upcoming Movies</title>
+    <!--오늘의 수업은 부트스트랩 ..!버전에 따라 달라질 수 있는니 버전 꼭 확인-->
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</head>
     <script
       src="https://code.jquery.com/jquery-3.6.4.js"
       integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
@@ -12,77 +17,106 @@
 
     <style>
       body {
-       background-color: rgb(255, 255, 255);
-     }
-     .container {
-       display: flex;
-       flex-wrap: wrap;
-       justify-content: flex-start;
-       margin-left: -10px;
-     }
-     #div0 {
-       display: flex;
-       align-items: center;
-       background-color: rgb(0, 0, 0);
-       height: 50px;
-       color: rgb(255, 255, 255);
-       text-indent: 20px;
-      
-     }
-     #box {
-       padding: 10px;
-       background-color: #ffffff;
-     }
-   
-     .card {
-       width: 190px;
-       height: 260px;
-       border: 1px solid #ccc;
-       padding: 10px;
-       margin-bottom: 10px;
-       cursor: pointer;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       
-       margin-right: 10px;
-       margin-left: 10px;
-       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
-     }
-   
-     .card img {
-       width: 180px;
-       height: 190px;
-       margin-bottom: 10px;
-       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
-     }
-   
-     .card .movie-details {
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-     }
-   
-     .card h3 {
-       margin-top: 5px;
-       margin-bottom: 5px;
-       text-align: center;
-       font-size: 13px; /* Adjust font size */
-     }
-     .card img:hover {
-  animation: shake 1s;
+      background-color: rgb(0, 0, 0);
+    }
+    header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
-@keyframes shake {
-  0% { transform: translateY(0); }
-  10% { transform: translateY(-2px); }
-  100% { transform: translateY(0); }
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  justify-items: center;
+  margin: 1px auto 0; /* 헤더의 높이에 따라 적절한 값으로 조정해주세요 */
+}
+    #div0 {
+      display: flex;
+      align-items: center;
+      background-color: rgb(0, 0, 0);
+      height: 50px;
+      color: rgb(255, 255, 255);
+      text-indent: 20px;
+    }
+    #box {
+      padding: 10px;
+      background-color: #ffffff;
+    }
+    .card {
+      width: 210px;
+      height: 280px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 10px;
+      margin-left: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    }
+    .card img {
+      width: 180px;
+      height: 200px;
+      margin-bottom: 10px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add box shadow */
+    }
+    .card .movie-details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card h3 {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      text-align: center;
+      font-size: 13px; /* Adjust font size */
+    }
+    .card img:hover {
+      animation: shake 1s;
+    }
+    @keyframes shake {
+      0% {
+        transform: translateY(0);
+      }
+      10% {
+        transform: translateY(-2px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+    #button{
+      position: absolute;
+       left: 100;
+      border: 1px rgb(228, 224, 224) solid;
+background-color: rgb(67, 68, 68);
+color:#ffffff
+    }
+    #player-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10px; /* 동영상 플레이어의 높이에 맞게 조정 */
+  margin-top: 330px; /* 원하는 만큼의 여백을 추가하여 아래로 내립니다 */
+}
+
+#player {
+  width: 1000px; /* 원하는 동영상의 넓이로 수정합니다 */
+  height: 550px
 }
        </style>
-   
+     <script src="https://www.youtube.com/iframe_api"></script>
+     
    <script>
+
+    
     let page = 1; // 현재 페이지
-    const moviesPerPage = 8; // 한 페이지당 영화 개수
+    const moviesPerPage = 5; // 한 페이지당 영화 개수
     let moviesData; // 전체 영화 데이터
   
     async function fetchMovies() {
@@ -117,14 +151,15 @@
         const title = document.createElement("h3");
         title.textContent = movie.title;
   
-        const releaseDate = document.createElement("p");
-        releaseDate.textContent = "개봉일: " + movie.release_date;
 
-        
+        const rating = document.createElement("p");
+        rating.textContent = "평점: " + movie.vote_average.toFixed(1);
+        rating.classList.add("rating"); // 평점에 클래스 추가
+
   
         movieDetails.appendChild(title);
-        movieDetails.appendChild(releaseDate);
-  
+        movieDetails.appendChild(rating);
+
         card.appendChild(poster);
         card.appendChild(movieDetails);
   
@@ -148,11 +183,65 @@
     document.addEventListener("DOMContentLoaded", function () {
       fetchMovies();
     });
+    // YouTube Player API 로드가 완료되면 호출되는 함수
+    function onYouTubeIframeAPIReady() {
+      // 동영상 플레이어 생성
+      const player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: '4jhz2NU-24Q', // 재생할 YouTube 동영상의 ID
+        playerVars: {
+          autoplay: 1, // 자동 재생
+          controls: 1, // 컨트롤러 표시
+          loop: 150, // 반복 재생
+        },
+      });
+    }
+  //        // 동영상 플레이어 생성
+  // const player = new YT.Player('player', {
+  //   height: '360',
+  //   width: '640',
+  //   videoId: '4jhz2NU-24Q', // 재생할 YouTube 동영상의 ID
+  //   playerVars: {
+  //     autoplay: 1, // 자동 재생
+  //     controls: 0, // 컨트롤러 표시
+  //      loop: 500, // 반복 재생
+  //   },
+  // });
+
   </script>
      </head>
    
-    <body><div id="div0"><b>🎞NINIJINI MOVIE🎞</b></div>
-      <button class="load-more-button" onclick="loadMoreMovies()">더 보기</button></body>
+    <body>
+      <header> <!--상단 검은 색 네모와 home 만드는 것-->
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+          <div class="container">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="">🎞NINIJINI MOVIE🎞 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp영화&nbsp 극장 &nbsp예매 &nbsp스토어 &nbsp이벤트</a> 
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div id="player-container">
+        <div id="player"></div>
+      </div>
+      <br></br>
+    <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+  <br></br>
+ 
+
+      <button id = "button" class="load-more-button" onclick="loadMoreMovies()">무비차트 더 보기</button></body>
+     
   </body>
    
     </html>
