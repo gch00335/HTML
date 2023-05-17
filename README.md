@@ -29,9 +29,11 @@ https://gch00335.github.io/HTML/HTML/game/ninigini2.html
 
 <hr>
 <h1> JAVA SCRIPT 영화사이트 프로젝트  <br> [2023.05.16 ~ 05.17]</br></h1>
+
+
 ## 💻 영화정보 사이트 링크 : 
 https://gch00335.github.io/HTML/HTML/async/exm05.html
-
+<hr>
 ## 💻 사용방법 :
 
 영화 예고편 영상은 자동재생되면 계속해서 반복되어 재생됩니다.
