@@ -28,7 +28,7 @@ https://gch00335.github.io/HTML/HTML/game/ninigini2.html
     
 
 <hr>
-<h1> JAVA SCRIPT 영화사이트 프로젝트 : <nini jini MARIO>  😎😎 <br> [2023.05.16 ~ 05.17]</br></h1>
+<h1> JAVA SCRIPT 영화사이트 프로젝트  <br> [2023.05.16 ~ 05.17]</br></h1>
 ## 💻 영화정보 사이트 링크 : 
 https://gch00335.github.io/HTML/HTML/async/exm05.html
 
