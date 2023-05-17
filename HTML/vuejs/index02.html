@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <!--ㅡmessagd 라고 적혀있는 부분 처럼 모두 같은 이름이여야 실행됨! -->
+    <div id="app">
+      <input type="text" v-model="message" />
+      <div>{{message}}</div>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          message: "",
+        },
+      });
+    </script>
+  </body>
+</html>
