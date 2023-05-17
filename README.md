@@ -27,5 +27,18 @@ https://gch00335.github.io/HTML/HTML/game/ninigini2.html
          (꼭 천천히 4초 간격으로 눌러줘야합니다 ) 
     
 
+<hr>
+<h1> JAVA SCRIPT 영화사이트 프로젝트 : <nini jini MARIO>  😎😎 <br> [2023.05.16 ~ 05.17]</br></h1>
+## 💻 영화정보 사이트 링크 : 
+https://gch00335.github.io/HTML/HTML/async/exm05.html
+
+## 💻 사용방법 :
+
+영화 예고편 영상은 자동재생되면 계속해서 반복되어 재생됩니다.
+포스터를 누르면 포스터 관련 정보가 다른페이지에서 열려 확인할 수 있습니다.
+
+     
+
+
 
  ![Footer](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=footer)
